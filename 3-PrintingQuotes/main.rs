@@ -1,22 +1,22 @@
-use std::io;
-use std::io::Write;
+use std::io::{stdin, stdout, Write};
 
-//todo: revisit
-/// Ask for a quote, then a name and then print the quote and the name nicely.
+fn generate_quote() -> String {
+    let quote = ask_question("What is the quote? ");
+    let author = ask_question("Who said it? ");
+
+    author + " says, \"" + quote.as_str() + "\""
+}
+
+
+fn ask_question(question: &str) -> String {
+    print!("{}", question);
+    stdout().flush();
+    let mut buffer = String::new();
+    stdin().read_line(&mut buffer);
+    if buffer.trim().is_empty() { panic!("You entered nothing!") } else { buffer.trim().to_owned() }
+}
+
+
 fn main() {
-    let mut quote = String::new(); // We store the quote in here.
-    let mut author = String::new(); // We store the quote in here.
-    print!("Hello, what's the quote that you want to process? ");
-    io::stdout().flush().unwrap(); // idk but this fixes the newline
-    io::stdin()
-        .read_line(&mut quote) // read the user input, store it in the variable.
-        .expect("No string was inputted!");
-
-    print!("Cool, and who made that quote? ");
-    io::stdout().flush().unwrap(); // idk but this fixes the newline
-    io::stdin()
-        .read_line(&mut author) // read the user input, store it in the variable.
-        .expect("No string was inputted!");
-
-    println!("The quote \"{}\" was written by: {}.", quote.trim(),author.trim());
+    println!("{}", generate_quote());
 }

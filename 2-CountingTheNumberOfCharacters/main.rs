@@ -1,21 +1,22 @@
-// PLAN: First, ask for user input, ask for name or something, and then output the length of the user input.
-//TODO: finish challenges
-use std::io;
+use std::io::{stdin, stdout, Write};
 
-fn main() {
-    let mut user_input = String::new(); // We store the typed text in here.
-    println!("Hey! what's your name? ");
-
-    io::stdin()// open io thingy
-        .read_line(&mut user_input) // read the user input, store it in the variable.
-        .expect("No string was inputted!");
-
-    println!("You entered {}", &user_input);
-    println!("Now calculating length!");
-    println!("{}", return_length_of_string(&user_input))
+fn get_char_number() -> String {
+    // https://stackoverflow.com/questions/54056268/temporary-value-is-freed-at-the-end-of-this-statement#comment131362495_54056716
+    let input = &ask_input().trim().to_owned();
+    let length = &input.len();
+    format!("{input} has {length} characters.")
 }
 
-// Takes a REFERENCE to a string, and returns its size.
-fn return_length_of_string(s: &str) -> usize {
-    s.len() - 1 // minus 1 because the enter key counts too!
+
+fn ask_input() -> String {
+    print!("What is the input string? ");
+    stdout().flush();
+    let mut buffer = String::new();
+    stdin().read_line(&mut buffer);
+    if buffer.trim().is_empty() { panic!("You entered nothing!") } else { buffer }
+}
+
+
+fn main() {
+    println!("{}", get_char_number());
 }
