@@ -1,0 +1,10 @@
+[package]
+name = "saying_hello"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "saying_hello"
+path = "main.rs"
